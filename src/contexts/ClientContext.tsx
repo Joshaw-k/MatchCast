@@ -27,7 +27,7 @@ export default function ClientProvider({
   children: ReactElement;
 }): ReactElement {
   const [client, setClient] = useState<Client | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     (async () => {
