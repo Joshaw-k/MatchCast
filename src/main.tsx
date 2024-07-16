@@ -18,7 +18,7 @@ async function conversationLoader({ params }: any) {
 
 const router = createHashRouter([
   {
-    path: "*",
+    path: "/",
     element: <App />,
   },
   {
@@ -36,8 +36,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <ClientProvider>
       <WalletContext>
-        {/* <RouterProvider router={router} /> */}
-        <App />
+        <RouterProvider router={router} />
       </WalletContext>
     </ClientProvider>
   </React.StrictMode>
