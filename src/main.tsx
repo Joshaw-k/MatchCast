@@ -11,6 +11,7 @@ import ConversationViewWithLoader from "./views/ConversationViewWithLoader.tsx";
 import NewConversationView from "./views/NewConversationView.tsx";
 import WalletContext from "./contexts/WalletContext.tsx";
 import Header from "./components/Header.tsx";
+import { Footer } from "./components/Footer.tsx";
 
 async function conversationLoader({ params }: any) {
   const conversation = await findConversation(params.conversationTopic);
@@ -39,6 +40,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
       <WalletContext>
         <Header />
         <RouterProvider router={router} />
+        <Footer />
       </WalletContext>
     </ClientProvider>
   </React.StrictMode>
