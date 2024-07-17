@@ -21,7 +21,7 @@ export const Hero = () => {
                     <div className="flex flex-col ml-5 w-[46%] max-md:ml-0 max-md:w-full">
                         <img
                             loading="lazy"
-                            src="https://cdn.builder.io/api/v1/image/assets/TEMP/11e7c96c847760b2ff6f2be848ee081b9cd805c08fe0793ed925b35323fc9f39?apiKey=6d09e386ed084a5db605f780c970c7a9&"
+                            src="nfthero.png"
                             alt="NFT showcase"
                             className="grow w-full aspect-[1.61] max-md:mt-10 max-md:max-w-full"
                         />
