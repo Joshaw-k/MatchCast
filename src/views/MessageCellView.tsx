@@ -11,6 +11,7 @@ import { ContentTypeReply, Reply } from "@xmtp/content-type-reply";
 import MessageRepliesView from "./MessageRepliesView";
 import ReactionsView from "./ReactionsView";
 import ReadReceiptView from "./ReadReceiptView";
+import { useReplies } from "../hooks/useReplies";
 
 function ImageAttachmentContent({
   attachment,
@@ -61,7 +62,7 @@ export function Content({
   contentType: ContentTypeId;
 }): ReactElement {
   if (ContentTypeText.sameAs(contentType)) {
-    return <span>{content}</span>;
+    return <span className="">{content}</span>;
   }
 
   if (ContentTypeReply.sameAs(contentType)) {
@@ -103,19 +104,63 @@ export default function MessageCellView({
   message: Message;
   readReceiptText: string | undefined;
 }): ReactElement {
+  const replies = useReplies(message);
   return (
-    <div className="flex">
-      <span
-        title={message.sentByMe ? "You" : message.senderAddress}
-        className={message.sentByMe ? "text-zinc-500" : "text-green-500"}
+    <div
+      className={
+        message.sentByMe
+          ? "self-end flex flex-row-reverse max-w-lg px-4 py-2 rounded-lg bg-blue-600"
+          : "flex self-start max-w-lg rounded-lg px-4 py-2 shadow-lg dark:bg-zinc-800"
+      }
+    >
+      <div
+        className={`${
+          message.sentByMe ? "text-white" : "text-black dark:text-white"
+        } space-y-1 text-xs`}
       >
-        {shortAddress(message.senderAddress)}:
-      </span>
-      <div className="ml-2">
-        <MessageContent message={message} />
-        <MessageRepliesView message={message} />
-        <ReactionsView message={message} />
-        <ReadReceiptView readReceiptText={readReceiptText} />
+        <span
+          title={message.sentByMe ? "You" : message.senderAddress}
+          className={
+            message.sentByMe
+              ? "text-gray-200 text-[10px]"
+              : "text-green-500 text-[10px]"
+          }
+        >
+          {/* {shortAddress(message.senderAddress)} */}
+        </span>
+        <div className={""}>
+          <MessageContent message={message} />
+          <div className="py-2">
+            {replies.length > 0 && (
+              <div className="">
+                {replies.slice(-1).map((message) => (
+                  <div
+                    className={`${
+                      message.sentByMe ? "bg-gray-200 text-black" : "bg-white"
+                    } flex flex-col text-xs space-x-1 rounded-lg p-2`}
+                    key={message.xmtpID}
+                  >
+                    <span className="text-[9px]">
+                      {shortAddress(message.senderAddress)}
+                    </span>
+                    <MessageContent message={message} />
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* <ReplyComposer
+        inReplyToMessage={message}
+        dismiss={() => setIsShowingReplies(false)}
+        replies={replies}
+      /> */}
+          </div>
+          <div className="flex flex-row items-center gap-x-4">
+            <MessageRepliesView message={message} />
+            <ReactionsView message={message} />
+          </div>
+          <ReadReceiptView readReceiptText={readReceiptText} />
+        </div>
       </div>
     </div>
   );

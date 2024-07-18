@@ -47,6 +47,8 @@ export async function addReaction(
     return;
   }
 
+  removeReaction(reactionName, message, client);
+
   await persistReaction({
     reactor: client.address,
     name: reactionName,

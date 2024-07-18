@@ -22,10 +22,10 @@ export default function ConversationListView(): ReactElement {
   }, [readReceiptsEnabled]);
 
   return (
-    <div>
+    <div className="h-[calc(100vh-80px)] overflow-y-auto">
       <button
         onClick={() => setReadReceiptsEnabled(!readReceiptsEnabled)}
-        className="bg-blue-100 p-1 my-2 text-xs"
+        className="bg-blue-100 dark:bg-zinc-700 px-3 py-1.5 my-2 text-xs rounded-lg"
         id={`read-receipt-${readReceiptsEnabled}`}
       >
         {readReceiptsEnabled ? "Disable read receipts" : "Enable read receipts"}
@@ -33,7 +33,7 @@ export default function ConversationListView(): ReactElement {
       {conversations?.length == 0 && <p>No conversations yet.</p>}
       {conversations
         ? conversations.map((conversation, i) => (
-            <Link to={`c/${conversation.topic}`} key={conversation.topic}>
+            <Link to={`/c/${conversation.topic}`} key={conversation.topic}>
               <ConversationCellView
                 conversation={conversation}
                 latestMessage={latestMessages[i]}

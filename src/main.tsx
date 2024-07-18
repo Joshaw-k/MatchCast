@@ -5,7 +5,11 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import ClientProvider from "./contexts/ClientContext.tsx";
-import { createHashRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  createHashRouter,
+  RouterProvider,
+} from "react-router-dom";
 import { findConversation } from "./model/conversations";
 import ConversationViewWithLoader from "./views/ConversationViewWithLoader.tsx";
 import NewConversationView from "./views/NewConversationView.tsx";
@@ -14,6 +18,7 @@ import Header from "./components/Header.tsx";
 import { Footer } from "./components/Footer.tsx";
 import Landing from "./pages/Landing/Landing";
 import Explore from "./pages/Explore/Explore";
+import { NextUIProvider } from "@nextui-org/system";
 
 async function conversationLoader({ params }: any) {
   const conversation = await findConversation(params.conversationTopic);
@@ -29,14 +34,26 @@ function NoMatch() {
   );
 }
 
-const router = createHashRouter([
+const router = createBrowserRouter([
   {
     path: "/",
-    element: <><Header /><Landing /><Footer /></>,
+    element: (
+      <>
+        <Header />
+        <Landing />
+        <Footer />
+      </>
+    ),
   },
   {
     path: "/explore",
-    element: <><Header /><Explore /><Footer /></>,
+    element: (
+      <>
+        <Header />
+        <Explore />
+        <Footer />
+      </>
+    ),
   },
 
   {
@@ -50,15 +67,23 @@ const router = createHashRouter([
   },
   {
     path: "*",
-    element: <><Header /><NoMatch /><Footer /></>,
-  }
+    element: (
+      <>
+        <Header />
+        <NoMatch />
+        <Footer />
+      </>
+    ),
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <ClientProvider>
       <WalletContext>
-        <RouterProvider router={router} />
+        <NextUIProvider>
+          <RouterProvider router={router} />
+        </NextUIProvider>
       </WalletContext>
     </ClientProvider>
   </React.StrictMode>

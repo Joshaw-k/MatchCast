@@ -4,6 +4,7 @@ import { useReactions } from "../hooks/useReactions";
 import { addReaction, removeReaction } from "../model/reactions";
 import { useClient } from "../hooks/useClient";
 import classNames from "classnames";
+import { LucideSmile, LucideThumbsUp } from "lucide-react";
 
 const defaultReactions = {
   thumbsup: "👍",
@@ -78,8 +79,7 @@ export default function ReactionsView({
     return acc;
   }, {} as { [key in ReactionString]?: MessageReaction[] });
 
-  const isFullyReacted =
-    reactions.length === Object.keys(defaultReactions).length;
+  const isFullyReacted = reactions.length === 1; // Object.keys(defaultReactions).length;
 
   return (
     <div className="flex space-x-2">
@@ -133,10 +133,15 @@ export default function ReactionsView({
           </div>
         ) : (
           <button
-            className="text-xs text-blue-600"
+            className={
+              message.sentByMe
+                ? "text-[9px] text-amber-300"
+                : "text-[9px] text-blue-600"
+            }
             onClick={() => setIsReacting((prev) => !prev)}
           >
-            React
+            {/* React */}
+            <LucideThumbsUp size={12} strokeWidth={4} />
           </button>
         )
       ) : null}
