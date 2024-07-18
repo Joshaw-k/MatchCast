@@ -15,6 +15,8 @@ import { Footer } from "./components/Footer.tsx";
 import Landing from "./pages/Landing/Landing";
 import Explore from "./pages/Explore/Explore";
 import { init } from "@airstack/airstack-react";
+import Match from "./pages/Match/Match.tsx";
+import MatchList from "./pages/Match/MatchList.tsx";
 
 async function conversationLoader({ params }: any) {
   const conversation = await findConversation(params.conversationTopic);
@@ -39,7 +41,14 @@ const router = createHashRouter([
     path: "/explore",
     element: <><Header /><Explore /><Footer /></>,
   },
-
+  {
+    path: "/match",
+    element: <><Header /><Match /><Footer /></>,
+  },
+  {
+    path: "/match/:id",
+    element: <><Header /><MatchList /><Footer /></>,
+  },
   {
     path: "c/:conversationTopic",
     element: <ConversationViewWithLoader />,
