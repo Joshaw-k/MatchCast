@@ -10,6 +10,7 @@ function App() {
   const client = useClient();
 
   return client ? <HomeView /> : <LoginView />;
+
 }
 
 export default App;
