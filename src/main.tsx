@@ -10,6 +10,7 @@ import { findConversation } from "./model/conversations";
 import ConversationViewWithLoader from "./views/ConversationViewWithLoader.tsx";
 import NewConversationView from "./views/NewConversationView.tsx";
 import WalletContext from "./contexts/WalletContext.tsx";
+import { init } from "@airstack/airstack-react";
 
 async function conversationLoader({ params }: any) {
   const conversation = await findConversation(params.conversationTopic);
@@ -31,6 +32,8 @@ const router = createHashRouter([
     element: <NewConversationView />,
   },
 ]);
+
+init("1b4bbb3cae25a4449b0642d8a2239e15d");
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
