@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Link } from "react-router-dom";
 
 export const Footer = () => {
     return (
@@ -6,9 +7,9 @@ export const Footer = () => {
             <div className="px-10 py-10 bg-white text-black flex gap-5 max-md:flex-col max-md:gap-0">
                 <div className="flex flex-col w-[36%] max-md:ml-0 max-md:w-full">
                     <div className="flex flex-col grow px-5 max-md:mt-10 max-md:max-w-full">
-                        <div className="text-xl font-semibold text-black max-md:max-w-full">
+                        <Link to="/" className="text-xl font-semibold text-black max-md:max-w-full">
                             MatchCast
-                        </div>
+                        </Link>
                         <div className="mt-5 text-sm leading-9 text-gray-800 max-md:max-w-full">
                             Platform for discovering and connecting with NFT holders
                         </div>

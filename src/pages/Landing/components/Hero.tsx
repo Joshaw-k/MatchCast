@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export const Hero = () => {
     return (
@@ -13,9 +14,9 @@ export const Hero = () => {
                             <p className="mt-4 text-lg text-gray-700 leading-loose max-md:max-w-full">
                                 Explore and connect with NFT holders based on your preferences.
                             </p>
-                            <button className="justify-center self-start px-8 py-2.5 mt-9 text-white bg-blue-600 shadow-sm rounded-[32px] max-md:px-5">
+                            <Link to="/explore" className="justify-center self-start px-8 py-2.5 mt-9 text-white bg-blue-600 shadow-sm rounded-[32px] max-md:px-5">
                                 Explore NFTs
-                            </button>
+                            </Link>
                         </div>
                     </div>
                     <div className="flex flex-col ml-5 w-[46%] max-md:ml-0 max-md:w-full">

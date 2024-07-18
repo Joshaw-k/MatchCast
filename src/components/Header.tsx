@@ -1,4 +1,5 @@
 import { PropsWithChildren, ReactElement } from "react";
+import { Link } from "react-router-dom";
 
 export default function Header({
   children,
@@ -6,10 +7,15 @@ export default function Header({
   return (
     <header className="flex flex-col justify-center px-16 py-5 shadow-2xl border text-black bg-white max-md:px-3">
       <div className="flex gap-5 justify-between max-md:flex-wrap max-md:mr-0.5 max-md:max-w-full">
-        <h1 className="my-auto text-lg font-semibold">MatchCast</h1>
-        <button className="justify-center px-8 py-2 bg-blue-600 text-white shadow-lg rounded-[32px] max-md:px-2">
+        <Link to="/" className="my-auto text-lg font-semibold">MatchCast</Link>
+        <div className="m-auto flex gap-10 text-sm text-gray-800">
+         <Link to="/collections">Collections</Link>
+         <Link to="/match">Match</Link>
+         <Link to="/conversations">Conversations</Link>
+        </div>
+        <Link to="/explore" className="justify-center px-8 py-2 bg-blue-600 text-white shadow-lg rounded-[32px] max-md:px-2">
           Explore NFTs
-        </button>
+        </Link>
       </div>
     </header>
   );
