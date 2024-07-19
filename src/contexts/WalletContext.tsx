@@ -84,7 +84,7 @@ export default function WalletContext({
                   <h3 className="text-base font-semibold leading-6 text-gray-900">
                     Waiting for signatures…
                   </h3>
-                  <p>
+                  <p className="text-gray-900">
                     Sign the messages you've been prompted with in your wallet
                     app to sign in to XMTP.
                   </p>

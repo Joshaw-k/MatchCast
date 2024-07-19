@@ -1,13 +1,21 @@
-import { FormEvent, ReactElement, createRef, useState } from "react";
-import { Link, redirect, useNavigate } from "react-router-dom";
+import { FormEvent, ReactElement, createRef, useEffect, useState } from "react";
+import { Link, redirect, useNavigate, useParams } from "react-router-dom";
 import Header from "../components/Header";
 import Button from "../components/Button";
 import { startConversation } from "../model/conversations";
 import { useClient } from "../hooks/useClient";
+import { useQuery } from "@airstack/airstack-react";
+import TimeAgo from "javascript-time-ago";
+import en from "javascript-time-ago/locale/en.json";
+import { Spinner } from "@nextui-org/react";
+
+TimeAgo.addDefaultLocale(en);
 
 export default function NewConversationView(): ReactElement {
   const client = useClient()!;
+  const searchParams = useParams()
 
+  console.log(searchParams)
   // We're using an uncontrolled component here because we don't need to update
   // anything as the user is typing.
   //
@@ -62,25 +70,78 @@ export default function NewConversationView(): ReactElement {
     addressInputRef.current?.focus();
   }
 
+  const getFuserQuery = `
+query MyQuery ($Identity: [Identity!]) {
+  Socials(
+    input: {filter: {dappName: {_eq: farcaster}, identity: {_in: $Identity}}, blockchain: ethereum}
+  ) {
+    Social {
+      id
+      chainId
+      blockchain
+      dappName
+      dappSlug
+      dappVersion
+      userId
+      userAddress
+      userCreatedAtBlockTimestamp
+      userCreatedAtBlockNumber
+      userLastUpdatedAtBlockTimestamp
+      userLastUpdatedAtBlockNumber
+      userHomeURL
+      userRecoveryAddress
+      userAssociatedAddresses
+      followerCount
+      followingCount
+      profileBio
+      profileDisplayName
+      profileImage
+      profileUrl
+      profileName
+      profileTokenId
+      profileTokenAddress
+      profileCreatedAtBlockTimestamp
+      profileCreatedAtBlockNumber
+      profileLastUpdatedAtBlockTimestamp
+      profileLastUpdatedAtBlockNumber
+      profileTokenUri
+      isDefault
+      identity
+    }
+  }
+}
+`;
+
+  const { data, loading } = useQuery(getFuserQuery, { "Identity": [searchParams.id] }, { cache: false });
+
+  console.log(data)
+
+  useEffect(() => { }, [data])
+
   return (
-    <div className="p-4 pt-14">
-      <Header>
-        <div className="flex justify-between">
-          <h1>Make a new conversation</h1>
-          <Link className="text-blue-600" to="/">
-            Go Back
-          </Link>
-        </div>
-      </Header>
+    <div className="p-4 pt-14 min-h-[60vh]">
       <div>
-        <form onSubmit={onSubmit} className="space-y-4">
+        <form onSubmit={onSubmit} className="space-y-4 w-fit mx-auto">
           {error && (
             <div className="p-4 border rounded w-full md:w-1/2 mt-2">
               {error}
             </div>
           )}
 
-          <label className="block">
+
+          {data ? data?.Socials?.Social.map((item: any, index: any) => <div key={index} className='border-2'>
+            <img src={`${item.profileImage}`} className='w-96 h-48' alt="" />
+            <div className='p-2'>
+              <h1 ><span className='font-bold text-lg mt-1'>Name: </span>{item.profileName}</h1>
+              <p className='py-2 max-w-72'><span className='font-bold text-lg mt-1'>Desc: </span>{item.profileBio}</p>
+              <div className='flex gap-x-3'>
+                <p><span className='font-bold'>Followers: </span>{item.followerCount}</p>
+                <p><span className='font-bold'>Following: </span>{item.followingCount}</p>
+              </div>
+            </div>
+          </div>) : loading ? <div className='w-fit mx-auto'> <Spinner size="lg" color="default" /></div> : <div className='text-center text-lg'><p>Loading Image. Might take a while...</p></div>}
+
+          <label className="hidden">
             <span className="block text-xs my-2">
               Who {addresses.length > 0 && "else "}do you want to message with?
             </span>
@@ -91,9 +152,10 @@ export default function NewConversationView(): ReactElement {
               type="text"
               className="border p-2 w-full md:w-1/2 rounded shadow-sm dark:bg-black"
               placeholder="Enter an address"
+              value={data?.Socials?.Social[0].userAddress}
             ></input>
           </label>
-          <label className="block space-x-4">
+          <label className="block space-x-4 w-fit mx-auto">
             <Button type="submit">Start Conversation</Button>
           </label>
         </form>

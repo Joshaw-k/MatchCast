@@ -17,6 +17,7 @@ import {
   LucideInfo,
   LucideMessageSquarePlus,
 } from "lucide-react";
+import { useQuery } from "@airstack/airstack-react";
 
 const appearsInMessageList = (message: Message): boolean => {
   if (ContentTypeReaction.sameAs(message.contentType as ContentTypeId)) {
@@ -39,6 +40,52 @@ export default function ConversationView({
 
   const [isShowingSettings, setIsShowingSettings] = useState(false);
 
+  const getFuserQuery = `
+query MyQuery ($Identity: [Identity!]) {
+  Socials(
+    input: {filter: {dappName: {_eq: farcaster}, identity: {_in: $Identity}}, blockchain: ethereum}
+  ) {
+    Social {
+      id
+      chainId
+      blockchain
+      dappName
+      dappSlug
+      dappVersion
+      userId
+      userAddress
+      userCreatedAtBlockTimestamp
+      userCreatedAtBlockNumber
+      userLastUpdatedAtBlockTimestamp
+      userLastUpdatedAtBlockNumber
+      userHomeURL
+      userRecoveryAddress
+      userAssociatedAddresses
+      profileBio
+      profileDisplayName
+      profileImage
+      profileUrl
+      profileName
+      profileTokenId
+      profileTokenAddress
+      profileCreatedAtBlockTimestamp
+      profileCreatedAtBlockNumber
+      profileLastUpdatedAtBlockTimestamp
+      profileLastUpdatedAtBlockNumber
+      profileTokenUri
+      isDefault
+      identity
+    }
+  }
+}
+`;
+
+  const { data } = useQuery(getFuserQuery, { "Identity": [conversation.peerAddress] }, { cache: false });
+
+  console.log(data)
+
+  useEffect(() => { }, [data])
+
   useEffect(() => {
     window.scrollTo({ top: 100000, behavior: "smooth" });
   }, [messages?.length]);
@@ -55,9 +102,10 @@ export default function ConversationView({
             <Link to={"/"} className="ml-2 mr-6">
               <LucideArrowLeft size={16} strokeWidth={6} color="gray" />
             </Link>
-            <span className="flex-grow">
-              {liveConversation?.title || conversation?.peerAddress}
-            </span>
+            <div className="flex-grow">
+              {data ? data?.Socials?.Social ? data?.Socials?.Social.map((item: any, index: any) => <div key={index} className='flex items-center gap-x-1 text-lg'><img src={`${item.profileImage}`} className="w-10 rounded-full" alt="" /><>{item.profileName}</></div>) : conversation.peerAddress : conversation.peerAddress}
+
+            </div>
             <div className="space-x-4">
               <button
                 className="inline-block space-x-1 text-zinc-600"

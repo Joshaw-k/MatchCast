@@ -1,4 +1,4 @@
-import { ReactElement, useState } from "react";
+import { ReactElement, useState, useEffect } from "react";
 import ConversationListView from "./ConversationListView";
 import { useClient, useSetClient } from "../hooks/useClient";
 import { shortAddress } from "../util/shortAddress";
@@ -29,24 +29,8 @@ export default function HomeView(): ReactElement {
 
   return (
     <div className="p-4 pt-14">
-      <Header>
-        <div className="flex justify-between">
-          <div>
-            Hi {shortAddress(client.address)}{" "}
-            <button className="text-xs text-zinc-600" onClick={copy}>
-              {copied ? "Copied Address!" : "Copy Address"}
-            </button>
-          </div>
-          <div>
-            <button onClick={logout}>Logout</button>
-          </div>
-        </div>
-      </Header>
       <small className="flex justify-between">
         <span>Here are your conversations:</span>
-        <Link to="new" className="text-blue-700">
-          Make a new one
-        </Link>
       </small>
       <ConversationListView />
     </div>
