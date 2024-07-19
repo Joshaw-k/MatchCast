@@ -10,7 +10,7 @@ export default function ConversationSettingsView({
 }): ReactElement {
   return (
     <XyzTransition appear xyz="fade up-1 ease-out">
-      <div className="mt-2 space-y-2">
+      <div className="mt-2 space-y-2 text-xs pl-12">
         <h3>Conversation Info</h3>
         <p>This is a 1:1 conversation with {conversation.peerAddress}.</p>
       </div>

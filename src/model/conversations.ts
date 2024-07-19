@@ -17,7 +17,7 @@ export async function getXMTPConversation(
   const conversations = await client.conversations.list();
   const xmtpConversation = conversations.find(
     (xmtpConversation) =>
-      stripTopicName(xmtpConversation.topic) == conversation.topic
+      stripTopicName(xmtpConversation.topic) == conversation?.topic
   );
 
   if (!xmtpConversation)

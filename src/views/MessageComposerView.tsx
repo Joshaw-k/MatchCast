@@ -77,7 +77,7 @@ export default function MessageComposerView({
   }
 
   return (
-    <div className="fixed left-0 right-0 bottom-0 p-4 bg-white dark:bg-zinc-900">
+    <div className="fixe sticky left-0 right-0 bottom-0 p-4 bg-white dark:bg-zinc-900">
       <input
         ref={fileField}
         type="file"
@@ -85,7 +85,7 @@ export default function MessageComposerView({
         style={{ position: "absolute", marginLeft: "-10000px" }}
       />
       <form className="flex space-x-2 items-end" onSubmit={onSubmit}>
-        <div className=" flex-grow border rounded dark:bg-black dark:border-zinc-700 p-2">
+        <div className=" flex-grow border rounded-lg dark:bg-black dark:border-zinc-700 p-2">
           {attachment && (
             <AttachmentPreviewView
               attachment={attachment}
