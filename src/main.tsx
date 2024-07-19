@@ -1,6 +1,7 @@
 import "./polyfills";
 import "./index.css";
 import "@animxyz/core";
+import '@rainbow-me/rainbowkit/styles.css';
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
@@ -22,6 +23,7 @@ import { init } from "@airstack/airstack-react";
 import Match from "./pages/Match/Match.tsx";
 import MatchList from "./pages/Match/MatchList.tsx";
 import { NextUIProvider } from "@nextui-org/system";
+import HomeView from "./views/HomeView.tsx";
 
 async function conversationLoader({ params }: any) {
   const conversation = await findConversation(params.conversationTopic);
@@ -63,17 +65,27 @@ const router = createBrowserRouter([
     element: <><Header /><Match /><Footer /></>,
   },
   {
+    path: "/conversations",
+    element: <><Header /><HomeView /><Footer /></>,
+  },
+  {
     path: "/match/:id",
     element: <><Header /><MatchList /><Footer /></>,
   },
   {
     path: "c/:conversationTopic",
-    element: <ConversationViewWithLoader />,
+    element: <><Header />
+      <ConversationViewWithLoader />
+    </>,
     loader: conversationLoader,
   },
   {
-    path: "new",
-    element: <NewConversationView />,
+    path: "new/:id",
+    element: <>
+      <Header />
+      <NewConversationView />
+      <Footer />
+    </>,
   },
   {
     path: "*",
