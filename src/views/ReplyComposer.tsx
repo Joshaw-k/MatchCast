@@ -83,10 +83,9 @@ export default function ReplyComposer({
         onClick={() => enter()}
       >
         <span
-          className={`${
-            replies.length > 0 &&
+          className={`${replies.length > 0 &&
             "bg-blue-800 text-white px-1 py-0.5 rounded-full"
-          } flex flex-row items-center gap-x-1.5 font-black text-[10px]`}
+            } flex flex-row items-center gap-x-1.5 font-black text-[10px]`}
         >
           <LucideReply size={12} strokeWidth={4} />{" "}
           {replies.length > 0 && replies.length}
@@ -107,17 +106,16 @@ export default function ReplyComposer({
                   {replies.length > 0
                     ? "Your Replies"
                     : `Reply to ${shortAddress(
-                        inReplyToMessage.senderAddress
-                      )}`}
+                      inReplyToMessage.senderAddress
+                    )}`}
                 </ModalHeader>
                 <div className="py-2">
                   {replies.length > 0 && (
                     <div className="space-y-2">
-                      {replies.map((message) => (
+                      {replies.map((message: Message) => (
                         <div
-                          className={`${
-                            message.sentByMe ? "bg-gray-200 text-black" : ""
-                          } flex flex-col text-xs w-[92%] space-x-1 rounded-lg p-2 mx-auto`}
+                          className={`${message.sentByMe ? "bg-gray-200 text-black" : ""
+                            } flex flex-col text-xs w-[92%] space-x-1 rounded-lg p-2 mx-auto`}
                           key={message.xmtpID}
                         >
                           <span className="text-[9px]">
