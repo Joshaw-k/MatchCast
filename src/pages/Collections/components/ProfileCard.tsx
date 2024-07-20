@@ -14,9 +14,9 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ name, title, imageUrl, stats,
       ))}
       <h3 className="mt-10 text-lg text-center text-black max-md:mt-10">About</h3>
       <p className="mt-4 text-sm leading-loose text-center text-gray-700">{about}</p>
-      <button className="justify-center self-center px-6 py-3.5 mt-12 text-base bg-white shadow-sm rounded-[32px] text-zinc-700 max-md:px-5 max-md:mt-10">
-        View profile
-      </button>
+      <button className="justify-center px-8 py-2 mt-7 bg-blue-500 text-white shadow-lg rounded-[32px] max-md:px-2">
+          View more
+        </button>
     </section>
   );
 };
