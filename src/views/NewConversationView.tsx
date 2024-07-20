@@ -121,15 +121,15 @@ query MyQuery ($Identity: [Identity!]) {
   return (
     <div className="p-4 pt-14 min-h-[60vh]">
       <div>
-        <form onSubmit={onSubmit} className="space-y-4 w-fit mx-auto">
+        <form onSubmit={onSubmit} className="space-y-4">
           {error && (
-            <div className="p-4 border rounded w-full md:w-1/2 mt-2">
-              {error}
+            <div className="p-4 border rounded w-full md:w-1/2 mt-2 bg-red-500 text-white w-fit mx-auto">
+              This Farcaster account hasn't signed up to the XMTP Network. Why don't you invite him/her so you can start a conversation right away.
             </div>
           )}
 
 
-          {data ? data?.Socials?.Social.map((item: any, index: any) => <div key={index} className='border-2'>
+          {data ? data?.Socials?.Social.map((item: any, index: any) => <div key={index} className='border-2 w-fit mx-auto'>
             <img src={`${item.profileImage}`} className='w-96 h-48' alt="" />
             <div className='p-2'>
               <h1 ><span className='font-bold text-lg mt-1'>Name: </span>{item.profileName}</h1>

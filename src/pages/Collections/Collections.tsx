@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ProfileCard from './components/ProfileCard';
 import CollectionGrid from './components/CollectionGrid';
+import { useQuery } from '@airstack/airstack-react';
 
 const Collections: React.FC = () => {
   const profileData = {
@@ -18,16 +19,139 @@ const Collections: React.FC = () => {
 
   const collectionImages = Array(6).fill("nft1.png");
 
+  const getFuserQuery = `
+query MyQuery ($Identity: [Identity!]) {
+  Socials(
+    input: {filter: {dappName: {_eq: farcaster}, identity: {_in: $Identity}}, blockchain: ethereum}
+  ) {
+    Social {
+      id
+      chainId
+      blockchain
+      dappName
+      dappSlug
+      dappVersion
+      userId
+      userAddress
+      userCreatedAtBlockTimestamp
+      userCreatedAtBlockNumber
+      userLastUpdatedAtBlockTimestamp
+      userLastUpdatedAtBlockNumber
+      userHomeURL
+      userRecoveryAddress
+      userAssociatedAddresses
+      followerCount
+      followingCount
+      profileBio
+      profileDisplayName
+      profileImage
+      profileUrl
+      profileName
+      profileTokenId
+      profileTokenAddress
+      profileCreatedAtBlockTimestamp
+      profileCreatedAtBlockNumber
+      profileLastUpdatedAtBlockTimestamp
+      profileLastUpdatedAtBlockNumber
+      profileTokenUri
+      isDefault
+      identity
+    }
+  }
+}
+`;
+  const { data: holderDetail, loading: holderNFTloader } = useQuery(getFuserQuery, { "Identity": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045" }, { cache: false });
+  useEffect(() => {
+
+  }, [holderNFTloader])
+
+  const GetNFTs = `query GetNFTs($Identity: [Identity!]) {
+  ethereum: TokenBalances(
+    input: {
+      filter: {
+        owner: { _in: $Identity }
+        tokenType: { _in: [ERC1155, ERC721] }
+      }
+      blockchain: ethereum
+      limit: 50
+    }
+  ) {
+    TokenBalance {
+      tokenAddress
+      amount
+      formattedAmount
+      tokenType
+      tokenNfts {
+        address
+        tokenId
+        blockchain
+        contentValue {
+          image {
+            original
+          }
+        }
+      }
+    }
+    pageInfo {
+      nextCursor
+      prevCursor
+      hasNextPage
+      hasPrevPage
+    }
+  }
+  base: TokenBalances(
+    input: {
+      filter: {
+        owner: { _in: $Identity }
+        tokenType: { _in: [ERC1155, ERC721] }
+      }
+      blockchain: base
+      limit: 50
+    }
+  ) {
+    TokenBalance {
+      tokenAddress
+      amount
+      formattedAmount
+      tokenType
+      tokenNfts {
+        address
+        metaData {
+        name
+        description
+        }
+        tokenId
+        blockchain
+        contentValue {
+          image {
+            original
+          }
+        }
+      }
+    }
+    pageInfo {
+      nextCursor
+      prevCursor
+      hasNextPage
+      hasPrevPage
+    }
+  }
+}`
+
+  const { data: holderNFTs, loading: holderloader, error } = useQuery(GetNFTs, { "Identity": ["0xd8da6bf26964af9d7eed9e03e53415d37aa96045"] }, { cache: false });
+
+  useEffect(() => { }, [holderNFTs])
+
   return (
     <main className="justify-center my-10 px-10">
       <div className="flex gap-5 max-md:flex-col max-md:gap-0">
         <aside className="flex flex-col w-[29%] max-md:ml-0 max-md:w-full">
-          <ProfileCard {...profileData} />
+          <ProfileCard holderDetail={holderDetail} holderNFTloader={holderNFTloader} />
         </aside>
         <section className="flex flex-col ml-5 w-[71%] max-md:ml-0 max-md:w-full">
           <div className="flex flex-col justify-center self-stretch px-5 my-auto max-md:mt-10 max-md:max-w-full">
             <h1 className="self-center text-xl font-medium text-black">My Collections</h1>
-            <CollectionGrid images={collectionImages} />
+            <CollectionGrid holderNFTs={holderNFTs} holderloader={holderloader} />
           </div>
         </section>
       </div>
