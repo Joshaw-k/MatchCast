@@ -10,10 +10,10 @@ export default function Header({
       <div className="flex gap-5 justify-between max-md:flex-wrap max-md:mr-0.5 max-md:max-w-full">
         <Link to="/" className="my-auto text-lg font-semibold">MatchCast</Link>
         <div className="m-auto flex gap-10 text-sm text-gray-800">
+          <Link to="/explore">Explore</Link>
           <Link to="/collections">Collections</Link>
           <Link to="/match">Match</Link>
           <Link to="/conversations">Conversations</Link>
-          <Link to="/explore">Explore</Link>
         </div>
         <ConnectButton />
       </div>

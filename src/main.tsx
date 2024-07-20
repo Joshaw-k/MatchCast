@@ -24,6 +24,7 @@ import Match from "./pages/Match/Match.tsx";
 import MatchList from "./pages/Match/MatchList.tsx";
 import { NextUIProvider } from "@nextui-org/system";
 import HomeView from "./views/HomeView.tsx";
+import Collections from "./pages/Collections/Collections.tsx";
 
 async function conversationLoader({ params }: any) {
   const conversation = await findConversation(params.conversationTopic);
@@ -59,6 +60,10 @@ const router = createBrowserRouter([
         <Footer />
       </>
     ),
+  },
+  {
+    path: "/collections",
+    element: <><Header /><Collections /><Footer /></>,
   },
   {
     path: "/match",
