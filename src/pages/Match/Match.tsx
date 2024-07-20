@@ -85,14 +85,16 @@ const Match = () => {
 
   const { data, loading, error } = useQuery(GetNFTs, { "Identity": ["0xd8da6bf26964af9d7eed9e03e53415d37aa96045"] }, { cache: false });
 
+  console.log(data)
+
   useEffect(() => { }, [address, data])
   return (
     <div className='text-black max-w-7xl mx-auto p-4 min-h-[60vh]'>
       <h1 className='text-2xl font-extrabold text-center mb-8'>Choose NFT to Match</h1>
       {data ? <div className='grid grid-cols-4 gap-4'>
         {data?.base.TokenBalance.map((item: any, index: any) => {
-          if (item.tokenNfts.contentValue.image.original !== "") return <Link to={`/match/${item.tokenAddress}`} key={index} className=''>
-            <img src={`${item.tokenNfts.contentValue.image.original}`} className='w-96 h-48' alt="" />
+          if (item.tokenNfts.contentValue?.image.original !== "" || item.tokenNfts.contentValue) return <Link to={`/match/${item.tokenAddress}`} key={index} className=''>
+            <img src={`${item.tokenNfts.contentValue?.image.original}`} className='w-96 h-48' alt="" />
             <h1 className='font-bold text-lg'>{item.tokenNfts.metaData.name}</h1>
             <p>{item.tokenNfts.metaData.description?.slice(0, 80)}...</p>
           </Link>
