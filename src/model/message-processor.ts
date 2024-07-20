@@ -63,9 +63,10 @@ export async function process(
 
     if (ContentTypeRemoteAttachment.sameAs(contentType)) {
       const remoteAttachment = content as RemoteAttachment;
+      // @ts-ignore
       const attachment: Attachment = await RemoteAttachmentCodec.load(
         remoteAttachment,
-        client
+        client as any
       );
 
       const messageAttachment: MessageAttachment = {
