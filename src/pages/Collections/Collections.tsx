@@ -60,7 +60,7 @@ query MyQuery ($Identity: [Identity!]) {
   }
 }
 `;
-  const { data: holderDetail, loading: holderNFTloader } = useQuery(getFuserQuery, { "Identity": "0xd8da6bf26964af9d7eed9e03e53415d37aa96045" }, { cache: false });
+  const { data: holderDetail, loading: holderNFTloader } = useQuery(getFuserQuery, { "Identity": "0x3Ca7b0f50f31D84fE187a9C8f14E083AD20C9872" }, { cache: false });
   useEffect(() => {
 
   }, [holderNFTloader])
