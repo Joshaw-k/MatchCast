@@ -83,7 +83,7 @@ const Match = () => {
   }
 }`
 
-  const { data, loading, error } = useQuery(GetNFTs, { "Identity": ["0xd8da6bf26964af9d7eed9e03e53415d37aa96045"] }, { cache: false });
+  const { data, loading, error } = useQuery(GetNFTs, { "Identity": [address] }, { cache: false });
 
   console.log(data)
 
